@@ -35,18 +35,18 @@ class Main:
         """
         self.player = Player(playerName)
         self.building  = Building()
+        self.endGame = False
 
 #########################################################################################
 #########################################################################################
 #########################################################################################
 
 # display the title
-title.title()
+# title.title()
 playerName = input("What is your player's name? ")
 game = Main(playerName)
 creditsClock = 0
 gameClock = 0
-endGame = False
 
 #########################################################################################
 #########################################################################################
@@ -75,7 +75,7 @@ def startGame():
         print(f"- <location>\n- Pickup\n- Drop\n- Attack\n- Perk")
 
         # if the player has killed more than 5 zombies and have the key they can exit
-        if game.player.getKills() > 5 and game.player.getLocation() == "hall" and "key" in game.player.getInventory():
+        if game.player.getKills() > 1 and game.player.getLocation() == "hall" and "key" in game.player.getInventory():
             print("- Exit\n")
         else:
             print("\n")
@@ -110,14 +110,16 @@ def startGame():
             game.player.usePerk(userInput)
         elif userInput == "exit" and game.building.key == True and "key" in game.player.inventory and game.player.location == 'hall':
             gameCredits(game.player, creditsClock)
-            endGame = True
+            game.endGame = True
             time.sleep(2)
+            os.system('clear')
+            exit()
         else:
             print(f"{Color.RED}Invalid input ... Pick from the options above {Color.OFF}")
             time.sleep(3)
         os.system('clear')
 
-    endGame = True
+    game.endGame = True
 
 #########################################################################################
 #########################################################################################
@@ -125,12 +127,11 @@ def startGame():
 
 # game timer
 def gameTimer():
-    global endGame
-    endGame = False
     global gameClock
     global creditsClock
 
-    while endGame == False:
+    while game.endGame == False:
+        print(game.endGame)
         gameClock+= 1
         creditsClock = gameClock
 
@@ -140,13 +141,13 @@ def gameTimer():
             deployWeapon(game.building)
 
         # deploy the key if the player has killed more than 5 zombies and 3 minutes has gone by
-        if gameClock >= 180 and game.player.getKills() >= 5 and game.building.getKey() == False:
+        if gameClock >= 1 and game.player.getKills() >= 0 and game.building.getKey() == False:
             deployKey(game.building)
             game.building.setKey(True)
 
         # checks the game clock to see if the game should end    
         if(gameClock >= 600 or game.player.getHealth() <= 0):
-            endGame = True
+            game.endGame = True
             os.system('clear')
             # display the game over screen if the main game thread ends
             gameOver()
