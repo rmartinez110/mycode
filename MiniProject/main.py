@@ -75,7 +75,7 @@ def startGame():
         print(f"- <location>\n- Pickup\n- Drop\n- Attack\n- Perk")
 
         # if the player has killed more than 5 zombies and have the key they can exit
-        if game.player.getKills() > 1 and game.player.getLocation() == "hall" and "key" in game.player.getInventory():
+        if game.player.getKills() > 5 and game.player.getLocation() == "hall" and "key" in game.player.getInventory():
             print("- Exit\n")
         else:
             print("\n")
@@ -141,7 +141,7 @@ def gameTimer():
             deployWeapon(game.building)
 
         # deploy the key if the player has killed more than 5 zombies and 3 minutes has gone by
-        if gameClock >= 1 and game.player.getKills() >= 0 and game.building.getKey() == False:
+        if gameClock >= 180 and game.player.getKills() >= 5 and game.building.getKey() == False:
             deployKey(game.building)
             game.building.setKey(True)
 
