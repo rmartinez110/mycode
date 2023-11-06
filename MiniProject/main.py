@@ -15,9 +15,8 @@ from weapon import deployWeapon
 from exitKey import deployKey
 from gameCredits import gameCredits
 from gameOver import gameOver
-# from perk import Perk
 
-# 
+# main class that creates the player and map
 class Main:
     """
     Author:
