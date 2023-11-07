@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+    #!/usr/bin/python3
 """Alta3 Research - Exploring OpenAPIs with requests"""
 # documentation for this API is at
 # https://anapioficeandfire.com/Documentation
@@ -17,7 +17,12 @@ def main():
 
         ## Decode the response
         got_dj = gotresp.json()
-        pprint.pprint(got_dj)
+        pprint.pprint(got_dj['books'])
+        pprint.pprint(got_dj['allegiances'])
+        if got_dj['name'] != "":
+            pprint.pprint(got_dj['name'])
+        else:
+            pprint.pprint(got_dj['aliases'])
 
 if __name__ == "__main__":
         main()
