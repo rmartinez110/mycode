@@ -6,6 +6,7 @@
 # An object of Flask class is our WSGI application
 # redirect lets you redirect the user to a different URL
 from flask import Flask, redirect, url_for, render_template, request
+from flask_cors import CORS, cross_origin
 import sqlite3
 import json
 
@@ -22,23 +23,35 @@ orderNumber = 45856
 # Flask constructor takes the name of current
 # module (__name__) as argument
 app = Flask(__name__)
+CORS(app)
+
+# Manually set CORS headers using the after_request decorator
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+    return response
 
 # main page
 @app.route("/")
+@cross_origin()
 def gamePage():
    return render_template("index.html")
 
 # order page redirect
 @app.route("/order")
+@cross_origin()
 def orderPage():
    return render_template("order.html")
 
 @app.route("/confirmation")
+@cross_origin()
 def confirmationPage():
    return render_template("confirmation.html")
 
 # api call to place the order
 @app.route("/placeorder", methods=['POST'])
+@cross_origin()
 def placeOrder():
     global orderNumber
     try:
@@ -70,6 +83,7 @@ def placeOrder():
 
 # database setup
 @app.route("/database/setup/pizza")
+@cross_origin()
 def dbSetupPizza():
    try:
       conn = sqlite3.connect('Pizza.db')
@@ -95,6 +109,7 @@ def dbSetupPizza():
 
 # database setup
 @app.route("/database/setup/orders")
+@cross_origin()
 def dbSetupOrder():
    try:
       conn = sqlite3.connect('Pizza.db')
@@ -127,6 +142,7 @@ def createLocation(id, state, city):
 
 # api call to get all locations
 @app.route("/database/getAllLocations")
+@cross_origin()
 def getAllLocations():
    try:
       conn = sqlite3.connect('Pizza.db')
@@ -134,6 +150,7 @@ def getAllLocations():
       cursor = conn.execute(query)
       locations = cursor.fetchall()
       response = {
+         "headers": {'Access-Control-Allow-Origin':"*"}, 
          "body":locations,
          "status":200
       }
@@ -148,6 +165,7 @@ def getAllLocations():
 
 # api call to get all locations
 @app.route("/database/getAllOrders")
+@cross_origin()
 def getAllOrders():
    try:
       conn = sqlite3.connect('Pizza.db')
@@ -168,6 +186,7 @@ def getAllOrders():
    return response
 
 @app.route("/database/getorder/<orderID>")
+@cross_origin()
 def getOrder(orderID):
 
    global orderNumber

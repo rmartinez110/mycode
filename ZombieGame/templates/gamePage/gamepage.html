@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='gamePage/style.css') }}"
+        />
+        <title>Zombie Escape</title>
+    </head>
+    <body>
+        <div class="mapDiv text-center text-decoration-underline">
+            <h1>Game Map</h1>
+        </div>
+        <img
+            class="mapImage"
+            id="gameMap"
+            src="{{ url_for('static', filename='maps/floor1map.png') }}"
+            alt="floor 1 map"
+        />
+        <div class="dot" id="dot"></div>
+        <div class="statsDiv">
+            <h1 class="text-decoration-underline text-center">Game Stats</h1>
+            <h4 class="text-decoration-underline">Player Info:</h4>
+            <ul class="mt-4">
+                <li class="list-unstyled">
+                    Player Name: .............
+                    <p class="d-inline" id="playerNameField"></p>
+                </li>
+                <li class="list-unstyled">
+                    Health: .......................
+                    <p class="d-inline" id="playerHealthField">100</p>
+                </li>
+                <li class="list-unstyled">
+                    Current Location: ......
+                    <p class="d-inline" id="playerLocationField">Hall</p>
+                </li>
+                <li class="list-unstyled" id="playerInventory">
+                    Inventory: ..................
+                    <!-- <button
+                        class="btn btn-primary inventoryButton"
+                        id="playerInventoryField"
+                    >
+                        Chainsaw
+                    </button> -->
+                </li>
+            </ul>
+            <h4 class="text-decoration-underline">Room Info:</h4>
+            <ul>
+                <li class="list-unstyled">
+                    Occupants: ....................
+                    <p class="d-inline" id="roomOccupants"></p>
+                </li>
+                <li class="list-unstyled">
+                    Room Inventory: ............
+                    <p class="d-inline" id="roomInventory">Room Inventory</p>
+                </li>
+                <li class="list-unstyled">
+                    Traversable Rooms: .......
+                    <p class="d-inline" id="roomTraversable"></p>
+                </li>
+            </ul>
+        </div>
+        <div id="result">
+            Click anywhere on the page to get the coordinates.
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+        ></script>
+        <script src="{{ url_for('static', filename='gamePage/script.js') }}"></script>
+    </body>
+</html>
